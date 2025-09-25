@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import org.hibernate.validator.constraints.URL;
 
@@ -28,9 +27,6 @@ public class Game {
     @NotBlank(message = "Genre is required.")
     private String genre;
 
-    @NotNull(message = "Price is required.")
-    @DecimalMin(value = "-0.01", inclusive = false, message = "Price must be greater than 0.")
-    private Double price;
 
     @PastOrPresent(message = "Release date cannot be in the future.")
     private LocalDate releaseDate;
@@ -47,8 +43,6 @@ public class Game {
     @URL(message = "Invalid URL format for YouTube link.")
     private String youtubeUrl;
 
-    // private Double stock;
-
     @Min(value = 0, message = "Rating must be at least 0.")
     @Max(value = 5, message = "Rating cannot be more than 5.")
     private Double rating;
@@ -56,10 +50,4 @@ public class Game {
     @NotBlank(message = "Platform is required.")
     private String platform;
 
-    @PositiveOrZero(message = "Sales count must be zero or greater.")
-    private Integer sales = 0; // Default 0
-
-    public void incrementSales() {
-        this.sales += 1;
-    }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @ControllerAdvice
@@ -28,6 +29,16 @@ public class GlobalControllerAdvice {
             if (user != null) {
                 model.addAttribute("role", user.getRole());
             }
+        }
+    }
+
+    @ControllerAdvice
+    public static class GlobalExceptionHandler {
+
+        @ExceptionHandler(Exception.class)
+        public String handleException(Exception e, Model model) {
+            model.addAttribute("error", "An unexpected error occurred: " + e.getMessage());
+            return "error"; // Pastikan ada template error.html
         }
     }
 }

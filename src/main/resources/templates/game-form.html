@@ -5,70 +5,155 @@ layout:decorate="~{layout}">
     <title>Create/Update Game</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body layout:fragment="content" class="bg-light">
-    <div class="container mt-5">
-        <div class="card p-4 shadow-lg">
-            <h2 class="text-primary mb-4" th:text="${game.id != null} ? 'Update Game' : 'Create Game'"></h2>
-            <form th:action="@{/games(id=${game.id})}" th:object="${game}" method="post">
-                <!-- Form fields -->
-                <div class="mb-3">
-                    <label class="form-label">Game Name</label>
-                    <input type="text" class="form-control" th:field="*{name}" />
-                    <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Genre</label>
-                    <input type="text" class="form-control" th:field="*{genre}" />
-                    <div class="text-danger" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre} "></div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Price</label>
-                    <input type="number" step="0.01" class="form-control" th:field="*{price}" />
-                    <div class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Release Date</label>
-                    <input type="date" class="form-control" th:field="*{releaseDate}" />
-                    <div class="text-danger" th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}"></div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Developer</label>
-                    <input type="text" class="form-control" th:field="*{developer}" />
-                    <div class="text-danger" th:if="${#fields.hasErrors('developer')}" th:errors="*{developer}"></div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea class="form-control" th:field="*{description}"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Image URL</label>
-                    <input type="text" class="form-control" th:field="*{imageUrl}" />
-                    <div class="text-danger" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">YouTube URL</label>
-                    <input type="text" class="form-control" th:field="*{youtubeUrl}" />
-                    <div class="text-danger" th:if="${#fields.hasErrors('youtubeUrl')}" th:errors="*{youtubeUrl}"></div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Rating</label>
-                    <input type="number" step="0.1" min="0" max="5" class="form-control" th:field="*{rating}" />
-                    <div class="text-danger" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Platform</label>
-                    <input type="text" class="form-control" th:field="*{platform}" />
-                    <div class="text-danger" th:if="${#fields.hasErrors('platform')}" th:errors="*{platform}"></div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Sales Count</label>
-                    <input type="number" class="form-control" th:field="*{sales}" />
-                    <div class="text-danger" th:if="${#fields.hasErrors('sales')}" th:errors="*{sales}"></div>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Submit</button>
-            </form>
-            <a th:if="${role == 'ADMIN'}" th:href="@{/games/admin}" class="btn btn-secondary mt-3">Back to Game List</a>
-            <a th:if="${role != 'ADMIN'}" th:href="@{/games/user}" class="btn btn-secondary mt-3">Back to Game List</a>
+<body layout:fragment="content" class="fade-in-up">
+    <div class="container mt-4">
+        <!-- Header -->
+        <div class="text-center mb-4">
+            <h2 class="fw-bold" style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                <i class="bi bi-controller me-2"></i>
+                <span th:text="${game.id != null} ? 'Update Game' : 'Create New Game'">Create Game</span>
+            </h2>
+            <p class="text-muted">Fill in the details below to add or update a game</p>
+        </div>
+
+        <!-- Back Button -->
+        <div class="mb-4">
+            <a th:if="${role == 'ADMIN'}" th:href="@{/games/admin}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left me-2"></i>Back to Admin Panel
+            </a>
+        </div>
+
+        <!-- Form Card -->
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-4">
+                <form th:action="@{/games(id=${game.id})}" th:object="${game}" method="post">
+                    <div class="row">
+                        <!-- Left Column -->
+                        <div class="col-md-6">
+                            <!-- Game Name -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-joystick me-2 text-primary"></i>Game Name *
+                                </label>
+                                <input type="text" class="form-control form-control-lg" th:field="*{name}"
+                                       placeholder="Enter game name" />
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                            </div>
+
+                            <!-- Genre -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-tag me-2 text-primary"></i>Genre *
+                                </label>
+                                <input type="text" class="form-control" th:field="*{genre}"
+                                       placeholder="e.g., Action, RPG, Strategy" />
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
+                            </div>
+
+                            <!-- Developer -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-building me-2 text-primary"></i>Developer *
+                                </label>
+                                <input type="text" class="form-control" th:field="*{developer}"
+                                       placeholder="Enter developer name" />
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('developer')}" th:errors="*{developer}"></div>
+                            </div>
+
+                            <!-- Platform -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-controller me-2 text-primary"></i>Platform *
+                                </label>
+                                <select class="form-select" th:field="*{platform}">
+                                    <option value="">Select Platform</option>
+                                    <option value="PC">PC</option>
+                                    <option value="PlayStation">PlayStation</option>
+                                    <option value="Xbox">Xbox</option>
+                                    <option value="Nintendo Switch">Nintendo Switch</option>
+                                    <option value="Mobile">Mobile</option>
+                                    <option value="Multi-platform">Multi-platform</option>
+                                </select>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('platform')}" th:errors="*{platform}"></div>
+                            </div>
+
+                            <!-- Release Date -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-calendar3 me-2 text-primary"></i>Release Date
+                                </label>
+                                <input type="date" class="form-control" th:field="*{releaseDate}" />
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('releaseDate')}" th:errors="*{releaseDate}"></div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="col-md-6">
+                            <!-- Rating -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-star me-2 text-primary"></i>Rating (0-5)
+                                </label>
+                                <input type="number" step="0.1" min="0" max="5" class="form-control" th:field="*{rating}"
+                                       placeholder="4.5" />
+                                <div class="form-text">Enter a rating between 0 and 5</div>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
+                            </div>
+
+                            <!-- Image URL -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-image me-2 text-primary"></i>Image URL
+                                </label>
+                                <input type="url" class="form-control" th:field="*{imageUrl}"
+                                       placeholder="https://example.com/image.jpg" />
+                                <div class="form-text">Provide a direct link to the game cover image</div>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></div>
+                            </div>
+
+                            <!-- YouTube URL -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-youtube me-2 text-primary"></i>YouTube Trailer URL
+                                </label>
+                                <input type="url" class="form-control" th:field="*{youtubeUrl}"
+                                       placeholder="https://www.youtube.com/watch?v=..." />
+                                <div class="form-text">Link to the game's trailer on YouTube</div>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('youtubeUrl')}" th:errors="*{youtubeUrl}"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description (Full Width) -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">
+                            <i class="bi bi-file-text me-2 text-primary"></i>Description
+                        </label>
+                        <textarea class="form-control" th:field="*{description}" rows="4"
+                                  placeholder="Enter a detailed description of the game..."></textarea>
+                        <div class="form-text">Provide a comprehensive description of the game's features and gameplay</div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-3 justify-content-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg px-5">
+                            <i class="bi bi-check-circle me-2"></i>
+                            <span th:text="${game.id != null} ? 'Update Game' : 'Create Game'">Submit</span>
+                        </button>
+                        <a th:href="@{/games/admin}" class="btn btn-secondary btn-lg px-5">
+                            <i class="bi bi-x-circle me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Help Text -->
+        <div class="text-center mt-4">
+            <small class="text-muted">
+                <i class="bi bi-info-circle me-1"></i>
+                Fields marked with * are required
+            </small>
         </div>
     </div>
 </body>

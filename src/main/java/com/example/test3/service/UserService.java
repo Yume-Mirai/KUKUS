@@ -32,12 +32,6 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public void addBalance(String username, double amount) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        user.addBalance(amount);
-        userRepository.save(user);
-    }
 
     public void saveUser(User user) {
         userRepository.save(user);

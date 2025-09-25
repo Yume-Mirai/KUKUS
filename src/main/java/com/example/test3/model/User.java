@@ -1,6 +1,7 @@
 package com.example.test3.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.Getter;
@@ -24,19 +25,5 @@ public class User {
     @NotEmpty(message = "Password is required")
     private String password;
 
-    @Column(name = "balance", nullable = false)
-    private Double balance = 0.0; // Default value
-
     private String role = "USER"; // Default role
-
-    public void addBalance(double amount) {
-        this.balance += amount;
-    }
-
-    public void deductBalance(double amount) {
-        if (this.balance < amount) {
-            throw new RuntimeException("Insufficient balance.");
-        }
-        this.balance -= amount;
-    }
 }
