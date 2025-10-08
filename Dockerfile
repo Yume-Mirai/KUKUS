@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 COPY mvnw mvnw.cmd pom.xml ./
 COPY .mvn/ .mvn/
 
+# Memberikan permission execute pada Maven wrapper
+RUN chmod +x ./mvnw
+
 # Download dependencies (akan di-cache jika pom.xml tidak berubah)
 RUN ./mvnw dependency:go-offline -B
 
