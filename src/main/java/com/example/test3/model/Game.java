@@ -44,7 +44,7 @@ public class Game {
     private String youtubeUrl;
 
     @Min(value = 0, message = "Rating must be at least 0.")
-    @Max(value = 5, message = "Rating cannot be more than 5.")
+    @Max(value = 100, message = "Rating cannot be more than 100.")
     private Double rating;
 
     @NotBlank(message = "Platform is required.")

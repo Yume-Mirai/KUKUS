@@ -92,11 +92,11 @@ layout:decorate="~{layout}">
                             <!-- Rating -->
                             <div class="mb-4">
                                 <label class="form-label fw-semibold">
-                                    <i class="bi bi-star me-2 text-primary"></i>Rating (0-5)
+                                    <i class="bi bi-star me-2 text-primary"></i>Rating (0-100)
                                 </label>
-                                <input type="number" step="0.1" min="0" max="5" class="form-control" th:field="*{rating}"
+                                <input type="number" step="0.1" min="0" max="100" class="form-control" th:field="*{rating}"
                                        placeholder="4.5" />
-                                <div class="form-text">Enter a rating between 0 and 5</div>
+                                <div class="form-text">Enter a rating between 0 and 100</div>
                                 <div class="text-danger small mt-1" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
                             </div>
 

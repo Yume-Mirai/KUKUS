@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: spring-boot-app
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /actuator/health
+    autoDeploy: false
+    disk:
+      name: spring-boot-disk
+      mountPath: /app
+      sizeGB: 1
+    envVars:
+      - key: JAVA_OPTS
+        value: "-Xmx512m -Xms256m"
+      - key: SPRING_PROFILES_ACTIVE
+        value: "prod"
