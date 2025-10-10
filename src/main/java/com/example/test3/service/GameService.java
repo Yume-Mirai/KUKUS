@@ -43,10 +43,25 @@ public class GameService {
     }
 
     
+    
     @Transactional
-    public void saveGame(Game game) {
-        gameRepository.save(game);
-        logger.info("Game saved: {}", game.getName());
+    public Game saveGame(Game game) {
+        logger.info("Saving game: {}", game.getName());
+        
+        try {
+            Game savedGame = gameRepository.save(game);
+            logger.info("Game saved successfully with ID: {}", savedGame.getId());
+            
+            // Verifikasi data tersimpan
+            Game verified = gameRepository.findById(savedGame.getId())
+                .orElseThrow(() -> new RuntimeException("Failed to verify saved game"));
+            logger.info("Verified game in database: {}", verified.getName());
+            
+            return savedGame;
+        } catch (Exception e) {
+            logger.error("Error saving game: ", e);
+            throw e;
+        }
     }
 
     public Optional<Game> findById(Long id) {
