@@ -199,19 +199,7 @@ src/
 - Bersihkan cache Maven: `mvn clean`
 - Update dependencies: `mvn dependency:resolve`
 
-## 🤝 Contributing
-
-1. Fork repository
-2. Buat feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buat Pull Request
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 📞 Contact
 
-Email: your-email@example.com
-Project Link: [https://github.com/your-username/test3](https://github.com/your-username/test3)
+Email: asfari160904@gamil.com
